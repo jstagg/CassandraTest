@@ -1,0 +1,41 @@
+--create the keyspace
+CREATE KEYSPACE IF NOT EXISTS tutorialkeyspace
+    WITH replication = {'class': 'SingleRegionStrategy'};
+
+
+
+--create the table
+CREATE TABLE IF NOT EXISTS tutorialkeyspace.itemaliases (
+   alias text,
+   type text,
+   auom text,
+   item text,
+   suom text,
+   soid int,
+   PRIMARY KEY (alias, auom)
+);
+
+
+
+-- insert test data
+BEGIN UNLOGGED BATCH
+
+INSERT INTO tutorialkeyspace.itemaliases (alias, type, auom, item, suom, soid)
+    VALUES ('ABC123','MFR','EA','ABC123','EA',1);
+INSERT INTO tutorialkeyspace.itemaliases (alias, type, auom, item, suom, soid)
+    VALUES ('ABC-123','EM','EA','ABC123','EA',1);
+INSERT INTO tutorialkeyspace.itemaliases (alias, type, auom, item, suom, soid)
+    VALUES ('UNV123','COM',' ','ABC123','EA',1);
+INSERT INTO tutorialkeyspace.itemaliases (alias, type, auom, item, suom, soid)
+    VALUES ('BSN123','PROP',' ','ABC123','EA',1);
+INSERT INTO tutorialkeyspace.itemaliases (alias, type, auom, item, suom, soid)
+    VALUES ('ABC456','MFR',' ','ABC123','PK',2);
+INSERT INTO tutorialkeyspace.itemaliases (alias, type, auom, item, suom, soid)
+    VALUES ('ABC456A','REP',' ','ABC123','PK',2);
+	
+APPLY BATCH;
+
+
+
+--select
+SELECT * FROM tutorialkeyspace.itemaliases;
